@@ -10,8 +10,8 @@ Needs: F2.
 
 - F3.1 As finance, I see the approved claims that have not yet been exported.
 - F3.2 As finance, I export all approved, not-yet-exported claims as a CSV file I download.
-- F3.3 As finance, I see which claims were included in each export and when it was run. *assumed*
-- F3.4 As finance, I download a past export again. *assumed*
+- F3.3 As finance, I see which claims were included in each export and when it was run.
+- F3.4 As finance, I download a past export again.
 
 ## Decisions
 
