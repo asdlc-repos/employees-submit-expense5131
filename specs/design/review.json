@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "artifacts": [
+    {
+      "path": "specs/design/components/expense-api/openapi.yaml",
+      "checkedHash": "6fe17406cc298fc51b61ca5774d45ed0a2749550ccda055c4daeabee64b175dc"
+    },
+    {
+      "path": "specs/design/components/expense-webapp/prototype.json",
+      "checkedHash": "e0cf1acdb2e13829e2ea029bc46b35d5488b6b613e8f2233a1e8727bf036e743"
+    }
+  ]
+}
