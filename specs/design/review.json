@@ -3,7 +3,7 @@
   "artifacts": [
     {
       "path": "specs/design/components/expense-api/openapi.yaml",
-      "checkedHash": "6fe17406cc298fc51b61ca5774d45ed0a2749550ccda055c4daeabee64b175dc"
+      "checkedHash": "b1a13e26a55dd7a39e4cd05bd0c6cef4042cff35caf922d43997b3da6877614a"
     },
     {
       "path": "specs/design/components/expense-webapp/prototype.json",
@@ -12,6 +12,22 @@
     {
       "path": "specs/design/security.json",
       "checkedHash": "1db5b489f043c9b0b2fedf1337de2bbb692283edad407cecc4b21d61e484fbf2"
+    },
+    {
+      "path": "specs/design/design.cell",
+      "checkedHash": "7727edac072b7cd2cb2428ac65967ccf9b442a82bf4356b74520711d812de225"
+    },
+    {
+      "path": "specs/design/domain-model.md",
+      "checkedHash": "f01696e146fdf3a7f85b1121670c9bedb130cc48ee15b09135f372a8df94896d"
+    },
+    {
+      "path": "specs/design/flows/claim-to-payroll.md",
+      "checkedHash": "adfdd0dcbdc8c681b240f93569d08fdedb8fd5b0f402da6e9f14cb64d5b34f9d"
+    },
+    {
+      "path": "specs/design/decisions.md",
+      "checkedHash": "c2704c42f41592bcb86738d318eabdd9e0e43ee9846b364bcfc47eac102b53f6"
     }
   ]
 }
