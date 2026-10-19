@@ -1,0 +1,8 @@
+{
+  "name": "receipt-storage",
+  "resource": {
+    "name": "receipt-storage",
+    "description": "Stores the receipt files employees attach to expense line items; the database keeps only the object key.",
+    "provider": "Amazon S3"
+  }
+}
