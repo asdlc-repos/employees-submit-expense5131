@@ -19,6 +19,7 @@ Needs: F2.
 - An export includes every approved claim not yet exported; each is marked exported afterwards and is not included again.
 - Amounts in the file are in the company currency.
 - Claims are exported only after manager approval; nothing else is exported.
+- When no approved claim is waiting, finance cannot run an export and no empty file is produced. *assumed*
 
 ## Out of Scope
 

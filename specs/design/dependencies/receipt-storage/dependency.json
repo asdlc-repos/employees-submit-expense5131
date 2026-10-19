@@ -3,6 +3,14 @@
   "resource": {
     "name": "receipt-storage",
     "description": "Stores the receipt files employees attach to expense line items; the database keeps only the object key.",
-    "provider": "Amazon S3"
-  }
+    "provider": "Amazon S3",
+    "config": [
+      { "key": "AWS_ACCESS_KEY_ID", "secret": true, "description": "Access key id of the AWS user that may read and write the receipts bucket" },
+      { "key": "AWS_SECRET_ACCESS_KEY", "secret": true, "description": "Secret access key for that AWS user" },
+      { "key": "AWS_S3_BUCKET_NAME", "description": "Name of the S3 bucket that holds receipt files" },
+      { "key": "AWS_REGION", "defaultValue": "us-east-1", "description": "AWS region of the bucket" }
+    ],
+    "contract": { "type": "sdk", "path": "sdk.json", "origin": "derived" }
+  },
+  "provenance": { "sourceUrl": "https://docs.aws.amazon.com/AmazonS3/latest/API/Welcome.html" }
 }

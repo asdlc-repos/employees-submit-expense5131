@@ -20,3 +20,5 @@ Employees create and submit expense claims for review and track their status.
 - A receipt is required only for line items above $25.
 - Details are entered manually; receipts are stored but not read automatically.
 - Once a claim is approved, the employee can no longer edit or withdraw it.
+- A claim needs at least one line item, and every line item amount is above zero. *assumed*
+- An employee with no line manager assigned cannot submit a claim; they are told to ask Finance to assign one. *assumed*

@@ -14,6 +14,7 @@ Needs: F1.
 - F2.4 As a manager, I reject a claim with a reason.
 - F2.5 As a manager, I am emailed when a claim from my team is submitted.
 - F2.6 As an employee, I am emailed when my claim is approved or rejected.
+- F2.7 As finance, I assign each employee's line manager. *assumed*
 
 ## Decisions
 
@@ -22,6 +23,10 @@ Needs: F1.
 - While a manager is away, their claims wait; there are no deputies.
 - Notification is by email on submission and on decision, as part of this feature; transactional email is needed.
 - A decided claim cannot be changed by the manager.
+- Finance assigns line managers on a People screen; an employee appears there once they have signed in. *assumed*
+- A manager decides only claims of the people assigned to them, never their own; a manager's own claim goes to their own line manager. *assumed*
+- A claim goes to the manager assigned when it was submitted; reassigning a manager later does not move claims already pending. *assumed*
+- A failed email never undoes an approval, a rejection or a submission. *assumed*
 
 ## Out of Scope
 
