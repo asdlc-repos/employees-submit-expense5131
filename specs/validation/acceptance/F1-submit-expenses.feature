@@ -16,11 +16,11 @@ Feature: F1 Submit expenses
       Then the claim is not pending
 
   @story-F1.2
-  Rule: An employee may attach a receipt to a line item
+  Rule: An employee may record a receipt reference on a line item
 
-    Scenario: Maya attaches a receipt to a taxi item
+    Scenario: Maya records a receipt reference on a taxi item
       Given Maya has started a new claim with a "Travel" item of "$42.00" described "Taxi to the airport"
-      When she attaches the receipt "taxi-0110.pdf" to that item
+      When she records the receipt reference "taxi-0110.pdf" on that item
       Then that item shows the receipt "taxi-0110.pdf"
 
   @story-F1.3

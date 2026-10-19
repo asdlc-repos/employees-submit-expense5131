@@ -1,6 +1,6 @@
 # Domain model
 
-Employees submit claims made of line items with receipts; each claim goes to the employee's line manager, and approved claims are gathered into payroll exports. Every action is written to an audit log.
+Employees submit claims made of line items with receipt references; each claim goes to the employee's line manager, and approved claims are gathered into payroll exports. Every action is written to an audit log.
 
 ```mermaid
 erDiagram
@@ -8,7 +8,6 @@ erDiagram
     EMPLOYEE |o--o{ EMPLOYEE : "is line manager of"
     EMPLOYEE |o--o{ CLAIM : "decides as approver"
     CLAIM ||--|{ LINE_ITEM : contains
-    LINE_ITEM |o--o| RECEIPT : "is backed by"
     EXPORT ||--o{ CLAIM : includes
     EMPLOYEE ||--o{ EXPORT : runs
     EMPLOYEE ||--o{ AUDIT_ENTRY : performs
@@ -37,15 +36,7 @@ erDiagram
         string category
         int amountCents
         string description
-        string receiptId FK
-    }
-    RECEIPT {
-        string id PK
-        string uploadedById FK
-        string objectKey "key in object storage"
-        string fileName
-        string contentType
-        int sizeBytes
+        string receiptReference "receipt file name; no file is kept"
     }
     EXPORT {
         string id PK
@@ -64,4 +55,4 @@ erDiagram
     }
 ```
 
-Amounts are integers in cents in one company currency. A receipt's bytes live in object storage; the database holds only its key and metadata.
+Amounts are integers in cents in one company currency. No receipt files are stored; a line item holds only the receipt's file name.

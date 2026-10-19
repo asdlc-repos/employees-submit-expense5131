@@ -29,3 +29,5 @@ See [Product-wide](product-wide.md).
 - Automatic reading of receipts by an agent; employees enter claim details manually.
 - Direct integration with a payroll system; export is a downloadable file.
 - A separate Notifications feature.
+- Email notifications of any kind; people check their claims in the app.
+- Storing receipt files; a receipt is recorded as a reference only.

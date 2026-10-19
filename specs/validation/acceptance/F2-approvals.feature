@@ -52,22 +52,6 @@ Feature: F2 Approvals
       When Ravi tries to reject it with no reason
       Then the claim is still pending
 
-  @story-F2.5
-  Rule: The line manager is emailed when a claim from their team is submitted
-
-    Scenario: Ravi is emailed about Ana's new claim
-      Given Ana reports to Ravi
-      When Ana submits a claim
-      Then Ravi receives an email naming Ana's claim
-
-  @story-F2.6
-  Rule: The employee is emailed when their claim is decided
-
-    Scenario: Maya is emailed about the approval
-      Given Maya has a pending claim that reports to Ravi
-      When Ravi approves it
-      Then Maya receives an email saying the claim was approved
-
   @story-F2.7
   Rule: Only Finance assigns line managers, and nobody is their own manager
 

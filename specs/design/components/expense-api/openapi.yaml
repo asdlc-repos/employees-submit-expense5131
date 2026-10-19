@@ -16,9 +16,9 @@ components:
           authorizationUrl: /oauth2/authorize
           tokenUrl: /oauth2/token
           scopes:
-            claims:read: "The caller's own claims and their receipts"
-            claims:submit: "Create, edit, submit and withdraw the caller's own claims, and upload receipts"
-            claims:review-team: "Claims of the people the caller manages, and their receipts"
+            claims:read: "The caller's own claims"
+            claims:submit: "Create, edit, submit and withdraw the caller's own claims"
+            claims:review-team: "Claims of the people the caller manages"
             claims:approve: "Approve a claim of someone the caller manages"
             claims:reject: "Reject a claim of someone the caller manages"
             exports:read: "Approved claims waiting for export, past exports and their files"
@@ -36,11 +36,6 @@ components:
       schema: { type: integer, default: 0, minimum: 0 }
     claimId:
       name: claimId
-      in: path
-      required: true
-      schema: { type: string }
-    receiptId:
-      name: receiptId
       in: path
       required: true
       schema: { type: string }
@@ -101,8 +96,7 @@ components:
         category: { type: string, enum: [travel, meals, accommodation, supplies, other] }
         amountCents: { type: integer, description: "Amount in cents of the company currency, above zero" }
         description: { type: string }
-        receiptId: { type: string, nullable: true }
-        receiptFileName: { type: string, nullable: true }
+        receiptReference: { type: string, nullable: true, description: "The receipt's file name; no file is stored" }
     LineItemInput:
       type: object
       required: [expenseDate, category, amountCents, description]
@@ -111,7 +105,7 @@ components:
         category: { type: string, enum: [travel, meals, accommodation, supplies, other] }
         amountCents: { type: integer, description: "Cents, above zero; a receipt is required above 2500" }
         description: { type: string }
-        receiptId: { type: string, nullable: true }
+        receiptReference: { type: string, nullable: true, description: "The receipt's file name; required when the amount is above 2500" }
     ClaimInput:
       type: object
       required: [lineItems]
@@ -145,27 +139,6 @@ components:
         next: { type: string, nullable: true, description: "relative URI of the next page" }
         previous: { type: string, nullable: true, description: "relative URI of the previous page" }
         data: { type: array, items: { $ref: '#/components/schemas/Claim' } }
-    ReceiptUpload:
-      type: object
-      required: [fileName, contentType, contentBase64]
-      properties:
-        fileName: { type: string }
-        contentType: { type: string, description: "An image type or application/pdf" }
-        contentBase64: { type: string, description: "File bytes, base64; at most 10 MB decoded" }
-    Receipt:
-      type: object
-      required: [id, fileName, contentType, sizeBytes]
-      properties:
-        id: { type: string }
-        fileName: { type: string }
-        contentType: { type: string }
-        sizeBytes: { type: integer }
-    ReceiptLink:
-      type: object
-      required: [url, expiresAt]
-      properties:
-        url: { type: string, description: "Short-lived download link for the file" }
-        expiresAt: { type: string, format: date-time }
     Rejection:
       type: object
       required: [reason]
@@ -323,7 +296,7 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Claim' }
         '400':
-          description: "No line items, a missing receipt above the threshold, or no line manager assigned."
+          description: "No line items, a missing receipt reference above the threshold, or no line manager assigned."
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
@@ -347,41 +320,6 @@ paths:
         '401': { $ref: '#/components/responses/Unauthorized' }
         '404': { $ref: '#/components/responses/NotFound' }
         '409': { $ref: '#/components/responses/Conflict' }
-  /me/receipts:
-    post:
-      operationId: uploadReceipt
-      summary: "Upload a receipt file for the caller"
-      security:
-        - oauth2: [claims:submit]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema: { $ref: '#/components/schemas/ReceiptUpload' }
-      responses:
-        '201':
-          description: "The stored receipt, to reference from a line item."
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/Receipt' }
-        '400': { $ref: '#/components/responses/BadRequest' }
-        '401': { $ref: '#/components/responses/Unauthorized' }
-  /me/receipts/{receiptId}:
-    parameters:
-      - $ref: '#/components/parameters/receiptId'
-    get:
-      operationId: getMyReceiptLink
-      summary: "A download link for a receipt on the caller's own claim"
-      security:
-        - oauth2: [claims:read]
-      responses:
-        '200':
-          description: "A short-lived link."
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/ReceiptLink' }
-        '401': { $ref: '#/components/responses/Unauthorized' }
-        '404': { $ref: '#/components/responses/NotFound' }
   /me/team/claims:
     get:
       operationId: listTeamClaims
@@ -423,7 +361,7 @@ paths:
       - $ref: '#/components/parameters/claimId'
     post:
       operationId: approveTeamClaim
-      summary: "Approve a pending team claim and email the employee"
+      summary: "Approve a pending team claim"
       security:
         - oauth2: [claims:approve]
       responses:
@@ -440,7 +378,7 @@ paths:
       - $ref: '#/components/parameters/claimId'
     post:
       operationId: rejectTeamClaim
-      summary: "Reject a pending team claim with a reason and email the employee"
+      summary: "Reject a pending team claim with a reason"
       security:
         - oauth2: [claims:reject]
       requestBody:
@@ -458,22 +396,6 @@ paths:
         '401': { $ref: '#/components/responses/Unauthorized' }
         '404': { $ref: '#/components/responses/NotFound' }
         '409': { $ref: '#/components/responses/Conflict' }
-  /me/team/receipts/{receiptId}:
-    parameters:
-      - $ref: '#/components/parameters/receiptId'
-    get:
-      operationId: getTeamReceiptLink
-      summary: "A download link for a receipt on a team claim"
-      security:
-        - oauth2: [claims:review-team]
-      responses:
-        '200':
-          description: "A short-lived link."
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/ReceiptLink' }
-        '401': { $ref: '#/components/responses/Unauthorized' }
-        '404': { $ref: '#/components/responses/NotFound' }
   /export-queue:
     get:
       operationId: listExportQueue
