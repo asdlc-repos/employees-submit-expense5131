@@ -8,6 +8,10 @@
     {
       "path": "specs/design/components/expense-webapp/prototype.json",
       "checkedHash": "e0cf1acdb2e13829e2ea029bc46b35d5488b6b613e8f2233a1e8727bf036e743"
+    },
+    {
+      "path": "specs/design/security.json",
+      "checkedHash": "1db5b489f043c9b0b2fedf1337de2bbb692283edad407cecc4b21d61e484fbf2"
     }
   ]
 }
